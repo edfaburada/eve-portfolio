@@ -1,16 +1,86 @@
 import { useEffect, useRef, useState } from "react";
 import { useProjects } from "../hooks/useProjects";
 import ProjectCard from "./ProjectCard";
+import type { Project } from "../types/Project";
 
 const FILTERS = ["All", "Web Development", "Systems", "UI/UX"];
 
+const DEMO_PROJECTS: Project[] = [
+  {
+    id: 101,
+    title: "Interactive Portfolio Prototype",
+    description:
+      "A prototype portfolio design built in Figma showcasing personal branding, project highlights, and responsive layout concepts.",
+    image: "/project-portfolio.png",
+    category: "UI/UX",
+    tech: ["Figma", "UI/UX"],
+    live_url: "#",
+  },
+  {
+    id: 102,
+    title: "SIL Monitoring System",
+    description:
+      "An online web-based system for monitoring supervised industry learning (SIL) activities and student progress records.",
+    image: "/project-sil.png",
+    category: "Systems",
+    tech: ["PHP", "MySQL", "HTML", "CSS"],
+    live_url: "#",
+  },
+  {
+    id: 103,
+    title: "Coffee Shop UI/UX Design",
+    description:
+      "A clean and modern UI/UX design for a coffee shop online platform, including menu browsing and order flow screens.",
+    image: "/project-coffee.png",
+    category: "UI/UX",
+    tech: ["Figma", "UI/UX"],
+    live_url: "#",
+  },
+  {
+    id: 104,
+    title: "Personal Portfolio Website",
+    description:
+      "A fully responsive personal portfolio website built with React and TypeScript, connected to Supabase for dynamic project data.",
+    image: "/project-portfolio-web.png",
+    category: "Web Development",
+    tech: ["React", "TypeScript", "Supabase", "CSS"],
+    live_url: "#",
+  },
+  {
+    id: 105,
+    title: "Enrollment Information System",
+    description:
+      "A school enrollment system for Asian College featuring student registration, subject management, and login authentication.",
+    image: "/project-eis.png",
+    category: "Systems",
+    tech: ["PHP", "MySQL", "Bootstrap"],
+    live_url: "#",
+  },
+  {
+    id: 106,
+    title: "Responsive Landing Page",
+    description:
+      "A pixel-perfect responsive landing page for a local business, optimised for mobile-first performance and clean visual hierarchy.",
+    image: "/project-landing.png",
+    category: "Web Development",
+    tech: ["HTML", "CSS", "JavaScript"],
+    live_url: "#",
+  },
+];
+
 const Projects = () => {
-  const { projects, loading } = useProjects();
+  // Always start with demo projects visible — replace with live data once loaded
+  const { projects } = useProjects();
   const [active, setActive] = useState("All");
   const ref = useRef<HTMLElement>(null);
 
-  const filtered =
-    active === "All" ? projects : projects.filter((p) => p.category === active);
+  // Live Supabase data takes over when available; demo cards show otherwise
+  const allProjects: Project[] = projects.length > 0 ? projects : DEMO_PROJECTS;
+
+  const filtered: Project[] =
+    active === "All"
+      ? allProjects
+      : allProjects.filter((p) => p.category === active);
 
   useEffect(() => {
     const els = ref.current?.querySelectorAll<HTMLElement>(".reveal");
@@ -27,7 +97,7 @@ const Projects = () => {
     );
     els.forEach((el) => obs.observe(el));
     return () => obs.disconnect();
-  }, [projects]);
+  }, [allProjects]);
 
   return (
     <section className="section alt" id="projects" ref={ref}>
@@ -38,6 +108,7 @@ const Projects = () => {
           <p className="section-subtitle">Some of my works and sample projects.</p>
         </div>
 
+        {/* Filter Buttons */}
         <div className="filter-bar reveal">
           {FILTERS.map((f) => (
             <button
@@ -50,29 +121,20 @@ const Projects = () => {
           ))}
         </div>
 
-        {loading ? (
-          <p style={{ color: "var(--text-muted)", padding: "var(--space-5) 0" }}>
-            Loading projects…
-          </p>
-        ) : filtered.length === 0 ? (
-          <p style={{ color: "var(--text-muted)", padding: "var(--space-5) 0" }}>
-            No projects in this category yet.
-          </p>
-        ) : (
-          <div className="projects-grid">
-            {filtered.map((project, i) => (
-              <div
-                key={project.id}
-                className={`reveal reveal-delay-${Math.min(i + 1, 4) as 1 | 2 | 3 | 4}`}
-              >
-                <ProjectCard project={project} />
-              </div>
-            ))}
-          </div>
-        )}
+        {/* Always render the grid — never show an empty state */}
+        <div className="projects-grid">
+          {filtered.map((project, i) => (
+            <div
+              key={project.id}
+              className={`reveal reveal-delay-${((i % 3) + 1) as 1 | 2 | 3}`}
+            >
+              <ProjectCard project={project} />
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
 };
 
-export default Projects;  
+export default Projects;

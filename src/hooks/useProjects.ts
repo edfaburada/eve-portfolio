@@ -3,8 +3,8 @@ import { supabase } from "../services/supabaseClient";
 import type { Project } from "../types/Project";
 
 export const useProjects = () => {
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [loading, setLoading] = useState(true);
+  const newLocal = useState<Project[]>([]);
+  const [projects, setProjects] = newLocal;
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -17,14 +17,18 @@ export const useProjects = () => {
 
       if (error) {
         setError(error.message);
+        // Leave projects as [] so DEMO_PROJECTS kicks in
       } else {
         setProjects(data || []);
       }
-      setLoading(false);
     };
 
     fetchProjects();
   }, []);
 
-  return { projects, loading, error };
+  return { projects, error };
 };
+
+function setLoading(arg0: boolean) {
+  throw new Error("Function not implemented.");
+}
