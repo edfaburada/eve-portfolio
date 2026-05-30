@@ -1,5 +1,6 @@
 import type { Project } from "../types/Project";
 import { getImageUrl } from "../services/supabaseClient";
+import { useState } from "react";
 
 // Placeholder shown when no image is available
 const PLACEHOLDER =
@@ -10,76 +11,99 @@ interface Props {
 }
 
 const ProjectCard = ({ project }: Props) => {
-  // Resolve whatever is stored in `image` → a displayable URL
+  const [showDetails, setShowDetails] = useState(false);
+
   const imgSrc = getImageUrl(project.image) || PLACEHOLDER;
 
   return (
-    <article className="project-card">
-      <div className="project-img-wrap">
-        <img
-          src={imgSrc}
-          alt={project.title}
-          loading="lazy"
-          onError={(e) => {
-            // If the URL 404s, fall back to the placeholder silently
-            (e.currentTarget as HTMLImageElement).src = PLACEHOLDER;
-          }}
-        />
+    <>
+      {/* PROJECT CARD */}
+      <article className="project-card">
+        <div className="project-img-wrap">
+          <img
+            src={imgSrc}
+            alt={project.title}
+            loading="lazy"
+            onError={(e) => {
+              (e.currentTarget as HTMLImageElement).src = PLACEHOLDER;
+            }}
+          />
+        </div>
 
-        {/* Hover overlay with action buttons */}
-        <div className="project-img-overlay">
-          {project.live_url && (
-            <a
-              href={project.live_url}
-              target="_blank"
-              rel="noreferrer"
-              className="btn btn-ghost btn-sm"
-            >
-              Live ↗
-            </a>
-          )}
-          {project.demo_url && (
-            <a
-              href={project.demo_url}
-              target="_blank"
-              rel="noreferrer"
-              className="btn btn-ghost btn-sm"
-            >
-              Demo
-            </a>
+        <div className="project-body">
+          <h3 className="project-title">{project.title}</h3>
+          <p className="project-desc">{project.description}</p>
+
+          {project.tech && project.tech.length > 0 && (
+            <div className="project-tags">
+              {project.tech.map((t) => (
+                <span key={t} className="tag">{t}</span>
+              ))}
+            </div>
           )}
         </div>
-      </div>
 
-      <div className="project-body">
-        <h3 className="project-title">{project.title}</h3>
-        <p className="project-desc">{project.description}</p>
+        <div className="project-actions">
+          {project.live_url && (
+            <a
+              href={project.image}
+              className="btn btn-primary btn-sm"
+            >
+              View Project
+            </a>
+          )}
 
-        {project.tech && project.tech.length > 0 && (
-          <div className="project-tags">
-            {project.tech.map((t) => (
-              <span key={t} className="tag">{t}</span>
-            ))}
-          </div>
-        )}
-      </div>
-
-      <div className="project-actions">
-        {project.live_url && (
-          <a
-            href={project.live_url}
-            target="_blank"
-            rel="noreferrer"
-            className="btn btn-primary btn-sm"
+          <button
+            className="btn btn-secondary btn-sm"
+            onClick={() => setShowDetails(true)}
           >
-            View Project
-          </a>
-        )}
-        <a href="#contact" className="btn btn-secondary btn-sm">
-          Details
-        </a>
-      </div>
-    </article>
+            Details
+          </button>
+        </div>
+      </article>
+
+      {/* GLOBAL MODAL (NOT INSIDE CARD FLOW) */}
+      {showDetails && (
+        <div
+          className="modal-overlay"
+          onClick={() => setShowDetails(false)}
+        >
+          <div
+            className="modal-content"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h2>{project.title}</h2>
+
+            <img
+              src={imgSrc}
+              alt={project.title}
+              style={{
+                width: "100%",
+                borderRadius: "10px",
+                marginBottom: "1rem",
+              }}
+            />
+
+            <p>{project.description}</p>
+
+            {project.tech && (
+              <div className="project-tags">
+                {project.tech.map((t) => (
+                  <span key={t} className="tag">{t}</span>
+                ))}
+              </div>
+            )}
+
+            <button
+              className="btn btn-primary btn-sm"
+              onClick={() => setShowDetails(false)}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

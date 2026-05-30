@@ -49,7 +49,7 @@ const Navbar = () => {
           ))}
         </ul>
 
-        <a href="/resume.pdf" download className="btn btn-primary btn-sm nav-cta">
+        <a href="src\assets\resume.pdf" download className="btn btn-primary btn-sm nav-cta">
           Download CV
         </a>
 

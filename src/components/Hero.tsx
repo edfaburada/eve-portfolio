@@ -47,7 +47,7 @@ const Hero = () => {
 
             <div className="hero-actions reveal reveal-delay-4">
               <a href="projects" className="btn btn-primary">View My Work</a>
-              <a href="/resume.pdf" download className="btn btn-secondary">
+              <a href="src\assets\resume.pdf" download className="btn btn-secondary">
                 Download Resume
               </a>
               <a href="contact" className="btn btn-ghost">Contact Me</a>

@@ -11,10 +11,10 @@ const DEMO_PROJECTS: Project[] = [
     title: "Interactive Portfolio Prototype",
     description:
       "A prototype portfolio design built in Figma showcasing personal branding, project highlights, and responsive layout concepts.",
-    image: "/images/project-portfolio.png",
+    image: "src\assets\eve proto.png",
     category: "UI/UX",
     tech: ["Figma", "UI/UX"],
-    live_url: "#",
+    live_url: "https://www.figma.com/proto/7kbkEX03mfHluW35rVJijy/MY-PORTFOLIO?node-id=31-284&starting-point-node-id=31%3A284&t=KB0hoPyyOci1WdMb-1",
   },
   {
     id: 102,
