@@ -5,11 +5,6 @@ import type { Project } from "../types/Project";
 
 const FILTERS = ["All", "Web Development", "Systems", "UI/UX"];
 
-// ─── Demo Projects ──────────────────────────────────────────────────────────
-// Images must be placed in:  your-project/public/images/
-// Then referenced as:        /images/filename.png
-// Vite serves everything in /public/ at the root URL automatically.
-// ────────────────────────────────────────────────────────────────────────────
 const DEMO_PROJECTS: Project[] = [
   {
     id: 101,
@@ -78,16 +73,31 @@ const Projects = () => {
   const [active, setActive] = useState("All");
   const ref = useRef<HTMLElement>(null);
 
-  const allProjects: Project[] = projects.length > 0 ? projects : DEMO_PROJECTS;
+  const allProjects: Project[] =
+    projects.length > 0 ? projects : DEMO_PROJECTS;
 
-  const filtered: Project[] =
+  const filteredProjects =
     active === "All"
       ? allProjects
       : allProjects.filter((p) => p.category === active);
 
+  const groupedProjects =
+    active === "All"
+      ? FILTERS.filter((f) => f !== "All").map((category) => ({
+          category,
+          items: filteredProjects.filter((p) => p.category === category),
+        }))
+      : [
+          {
+            category: active,
+            items: filteredProjects,
+          },
+        ];
+
   useEffect(() => {
     const els = ref.current?.querySelectorAll<HTMLElement>(".reveal");
     if (!els) return;
+
     const obs = new IntersectionObserver(
       (entries) =>
         entries.forEach((e) => {
@@ -98,6 +108,7 @@ const Projects = () => {
         }),
       { threshold: 0.08 }
     );
+
     els.forEach((el) => obs.observe(el));
     return () => obs.disconnect();
   }, [allProjects]);
@@ -108,7 +119,9 @@ const Projects = () => {
         <div className="section-header reveal">
           <p className="section-eyebrow">Portfolio</p>
           <h2 className="section-title">Projects</h2>
-          <p className="section-subtitle">Some of my works and sample projects.</p>
+          <p className="section-subtitle">
+            Some of my works and sample projects.
+          </p>
         </div>
 
         <div className="filter-bar reveal">
@@ -116,7 +129,9 @@ const Projects = () => {
             <button
               key={f}
               className={`filter-btn${active === f ? " active" : ""}`}
-              onClick={() => setActive(f)}
+              onClick={() =>
+                setActive((prev) => (prev === f ? "All" : f))
+              }
             >
               {f}
             </button>
@@ -124,14 +139,18 @@ const Projects = () => {
         </div>
 
         <div className="projects-grid">
-          {filtered.map((project, i) => (
-            <div
-              key={project.id}
-              className={`reveal reveal-delay-${((i % 3) + 1) as 1 | 2 | 3}`}
-            >
-              <ProjectCard project={project} />
-            </div>
-          ))}
+          {groupedProjects.map((group) =>
+            group.items.map((project, i) => (
+              <div
+                key={project.id}
+                className={`reveal reveal-delay-${
+                  ((i % 3) + 1) as 1 | 2 | 3
+                }`}
+              >
+                <ProjectCard project={project} />
+              </div>
+            ))
+          )}
         </div>
       </div>
     </section>
