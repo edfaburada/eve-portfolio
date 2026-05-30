@@ -6,31 +6,67 @@ const supabaseAnonKey =
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-// ─── Helper ────────────────────────────────────────────────────────────────
-// Pass the value stored in the `image` column and get back a displayable URL.
-//
-// It handles three cases:
-//   1. Already a full URL  →  returned as-is
-//      e.g. "https://heqmvfzbomyvlvueckah.supabase.co/storage/v1/object/public/..."
-//
-//   2. A storage path only  →  converted to a public URL
-//      e.g. "projects/my-screenshot.png"
-//
-//   3. Empty / null  →  returns "" so the <img> is simply hidden
-//
-export const getImageUrl = (imagePath: string | null | undefined): string => {
-  if (!imagePath) return "";
-
-  // Already a full URL — use directly
-  if (imagePath.startsWith("http://") || imagePath.startsWith("https://")) {
-    return imagePath;
-  }
-
-  // Storage path — build the public URL
-  // Default bucket name is "projects"; change below if yours is different
-  const { data } = supabase.storage
-    .from("projects")          // ← your bucket name
-    .getPublicUrl(imagePath);
-
+/* ─── Storage image helper ─────────────────────────────────────────────────
+   Accepts whatever is stored in `image` column:
+   • Full https URL  → returned as-is
+   • Storage path    → converted to public URL  (bucket = "projects")
+   • null / ""       → returns "" (card shows placeholder)
+────────────────────────────────────────────────────────────────────────── */
+export const getImageUrl = (path?: string | null): string => {
+  if (!path) return "";
+  if (path.startsWith("http://") || path.startsWith("https://")) return path;
+  const { data } = supabase.storage.from("projects").getPublicUrl(path);
   return data.publicUrl ?? "";
+};
+
+/* ─── Typed Supabase helpers ────────────────────────────────────────────── */
+
+// ── Projects ──────────────────────────────────────────────────────────────
+export const fetchProjects = async () => {
+  const { data, error } = await supabase
+    .from("projects")
+    .select("*")
+    .order("id", { ascending: true });
+  if (error) throw error;
+  return data ?? [];
+};
+
+// ── Certificates ──────────────────────────────────────────────────────────
+export const fetchCertificates = async () => {
+  const { data, error } = await supabase
+    .from("certificates")
+    .select("*")
+    .order("date", { ascending: false });
+  if (error) throw error;
+  return data ?? [];
+};
+
+// ── Skills ────────────────────────────────────────────────────────────────
+export const fetchSkills = async () => {
+  const { data, error } = await supabase
+    .from("skills")
+    .select("*")
+    .order("id", { ascending: true });
+  if (error) throw error;
+  return data ?? [];
+};
+
+// ── About (single row) ────────────────────────────────────────────────────
+export const fetchAbout = async () => {
+  const { data, error } = await supabase
+    .from("about")
+    .select("*")
+    .single();
+  if (error) return null;
+  return data;
+};
+
+// ── Contact — insert a message ────────────────────────────────────────────
+export const sendMessage = async (payload: {
+  name: string;
+  email: string;
+  message: string;
+}) => {
+  const { error } = await supabase.from("messages").insert([payload]);
+  if (error) throw error;
 };
