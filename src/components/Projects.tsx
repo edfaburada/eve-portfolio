@@ -11,7 +11,7 @@ const DEMO_PROJECTS: Project[] = [
     title: "Interactive Portfolio Prototype",
     description:
       "A prototype portfolio design built in Figma showcasing personal branding, project highlights, and responsive layout concepts.",
-    image: "/project-portfolio.png",
+    image: "/assets/project-portfolio.png",
     category: "UI/UX",
     tech: ["Figma", "UI/UX"],
     live_url: "#",
@@ -21,7 +21,7 @@ const DEMO_PROJECTS: Project[] = [
     title: "SIL Monitoring System",
     description:
       "An online web-based system for monitoring supervised industry learning (SIL) activities and student progress records.",
-    image: "/project-sil.png",
+    image: "/assets/project-sil.png",
     category: "Systems",
     tech: ["PHP", "MySQL", "HTML", "CSS"],
     live_url: "#",
@@ -31,7 +31,7 @@ const DEMO_PROJECTS: Project[] = [
     title: "Coffee Shop UI/UX Design",
     description:
       "A clean and modern UI/UX design for a coffee shop online platform, including menu browsing and order flow screens.",
-    image: "/project-coffee.png",
+    image: "/assets/project-coffee.png",
     category: "UI/UX",
     tech: ["Figma", "UI/UX"],
     live_url: "#",
@@ -41,7 +41,7 @@ const DEMO_PROJECTS: Project[] = [
     title: "Personal Portfolio Website",
     description:
       "A fully responsive personal portfolio website built with React and TypeScript, connected to Supabase for dynamic project data.",
-    image: "/project-portfolio-web.png",
+    image: "/assets/project-portfolio-web.png",
     category: "Web Development",
     tech: ["React", "TypeScript", "Supabase", "CSS"],
     live_url: "#",
@@ -51,7 +51,7 @@ const DEMO_PROJECTS: Project[] = [
     title: "Enrollment Information System",
     description:
       "A school enrollment system for Asian College featuring student registration, subject management, and login authentication.",
-    image: "/project-eis.png",
+    image: "/assets/project-eis.png",
     category: "Systems",
     tech: ["PHP", "MySQL", "Bootstrap"],
     live_url: "#",
@@ -61,7 +61,7 @@ const DEMO_PROJECTS: Project[] = [
     title: "Responsive Landing Page",
     description:
       "A pixel-perfect responsive landing page for a local business, optimised for mobile-first performance and clean visual hierarchy.",
-    image: "/project-landing.png",
+    image: "/assets/project-landing.png",
     category: "Web Development",
     tech: ["HTML", "CSS", "JavaScript"],
     live_url: "#",
@@ -69,12 +69,10 @@ const DEMO_PROJECTS: Project[] = [
 ];
 
 const Projects = () => {
-  // Always start with demo projects visible — replace with live data once loaded
   const { projects } = useProjects();
   const [active, setActive] = useState("All");
   const ref = useRef<HTMLElement>(null);
 
-  // Live Supabase data takes over when available; demo cards show otherwise
   const allProjects: Project[] = projects.length > 0 ? projects : DEMO_PROJECTS;
 
   const filtered: Project[] =
@@ -105,7 +103,9 @@ const Projects = () => {
         <div className="section-header reveal">
           <p className="section-eyebrow">Portfolio</p>
           <h2 className="section-title">Projects</h2>
-          <p className="section-subtitle">Some of my works and sample projects.</p>
+          <p className="section-subtitle">
+            Some of my works and sample projects.
+          </p>
         </div>
 
         {/* Filter Buttons */}

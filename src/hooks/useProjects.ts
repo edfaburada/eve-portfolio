@@ -29,6 +29,6 @@ export const useProjects = () => {
   return { projects, error };
 };
 
-function setLoading(arg0: boolean) {
+function setLoading(_arg0: boolean) {
   throw new Error("Function not implemented.");
 }
