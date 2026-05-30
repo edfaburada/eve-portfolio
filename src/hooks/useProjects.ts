@@ -3,11 +3,13 @@ import { supabase } from "../services/supabaseClient";
 import type { Project } from "../types/Project";
 
 export const useProjects = () => {
-  const [projects, setProjects] = useState<Project[]>([]);
+  const newLocal = useState<Project[]>([]);
+  const [projects, setProjects] = newLocal;
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchProjects = async () => {
+      setLoading(true);
       const { data, error } = await supabase
         .from("projects")
         .select("*")
@@ -26,3 +28,7 @@ export const useProjects = () => {
 
   return { projects, error };
 };
+
+function setLoading(_arg0: boolean) {
+  throw new Error("Function not implemented.");
+}

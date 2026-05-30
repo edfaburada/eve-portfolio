@@ -5,18 +5,13 @@ import type { Project } from "../types/Project";
 
 const FILTERS = ["All", "Web Development", "Systems", "UI/UX"];
 
-// ─── Demo Projects ──────────────────────────────────────────────────────────
-// Images must be placed in:  your-project/public/images/
-// Then referenced as:        /images/filename.png
-// Vite serves everything in /public/ at the root URL automatically.
-// ────────────────────────────────────────────────────────────────────────────
 const DEMO_PROJECTS: Project[] = [
   {
     id: 101,
     title: "Interactive Portfolio Prototype",
     description:
       "A prototype portfolio design built in Figma showcasing personal branding, project highlights, and responsive layout concepts.",
-    image: "/images/project-portfolio.png",
+    image: "eve-portfolio/src/project-portfolio.png",
     category: "UI/UX",
     tech: ["Figma", "UI/UX"],
     live_url: "#",

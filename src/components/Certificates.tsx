@@ -1,65 +1,40 @@
 import { useEffect, useRef } from "react";
 
-const CARDS = [
+const CERTS = [
   {
-    icon: "👩‍💻",
-    title: "Who I Am",
-    content: (
-      <p>
-        I'm an aspiring IT professional and web developer with experience in
-        building websites, designing systems, and providing technical support. I
-        enjoy creating clean and functional designs that are easy to use.
-      </p>
-    ),
-    delay: "reveal-delay-1",
+    img: "/cert1.png",
+    name: "Front End Development Libraries",
+    date: "June 9, 2025",
+    issuer: "freeCodeCamp",
   },
   {
-    icon: "🎓",
-    title: "Education",
-    content: (
-      <>
-        <p><strong>Diploma in Information Technology</strong></p>
-        <p>Asian College, Dumaguete City</p>
-        <p>3rd Year Diploma Student (2022–2025)</p>
-      </>
-    ),
-    delay: "reveal-delay-2",
+    img: "/cert2.png",
+    name: "JavaScript Algorithms and Data Structures",
+    date: "June 14, 2025",
+    issuer: "freeCodeCamp",
   },
   {
-    icon: "🎯",
-    title: "Career Goal",
-    content: (
-      <p>
-        My goal is to grow in web development and IT support while building
-        real-world projects that help businesses and communities thrive.
-      </p>
-    ),
-    delay: "reveal-delay-3",
-  },
-  {
-    icon: "⚡",
-    title: "Quick Facts",
-    content: (
-      <ul>
-        {["Detail-oriented", "Fast learner", "Strong communication", "Team player", "Creative problem-solver"].map(
-          (f) => <li key={f}>{f}</li>
-        )}
-      </ul>
-    ),
-    delay: "reveal-delay-4",
+    img: "/cert3.png",
+    name: "Responsive Web Design",
+    date: "April 12, 2025",
+    issuer: "freeCodeCamp",
   },
 ];
 
-const About = () => {
-  const ref = useRef<HTMLDivElement>(null);
+const Certificates = () => {
+  const ref = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const els = ref.current?.querySelectorAll<HTMLElement>(".reveal");
     if (!els) return;
     const obs = new IntersectionObserver(
-      (entries) => entries.forEach((e) => {
-        if (e.isIntersecting) { (e.target as HTMLElement).classList.add("visible"); obs.unobserve(e.target); }
-      }),
+      (entries) =>
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            (e.target as HTMLElement).classList.add("visible");
+            obs.unobserve(e.target);
+          }
+        }),
       { threshold: 0.1 }
     );
     els.forEach((el) => obs.observe(el));
@@ -67,21 +42,28 @@ const About = () => {
   }, []);
 
   return (
-    <section className="section" id="about" ref={ref}>
+    <section className="section alt" id="certificates" ref={ref}>
       <div className="container">
         <div className="section-header reveal">
-          <p className="section-eyebrow">About</p>
-          <h2 className="section-title">About Me</h2>
-          <p className="section-subtitle">A quick introduction about who I am and what I do.</p>
+          <p className="section-eyebrow">Achievements</p>
+          <h2 className="section-title">Certificates</h2>
+          <p className="section-subtitle">Certifications and achievements I've earned.</p>
         </div>
 
-        <div className="about-grid about-grid-2col">
-          {CARDS.map((card) => (
-            <div key={card.title} className={`about-card reveal ${card.delay}`}>
-              <div className="about-card-icon">{card.icon}</div>
-              <h3>{card.title}</h3>
-              {card.content}
-            </div>
+        <div className="cert-grid">
+          {CERTS.map((cert, i) => (
+            <article
+              key={cert.name}
+              className={`cert-card reveal reveal-delay-${(i + 1) as 1 | 2 | 3}`}
+            >
+              <div className="cert-img-wrap">
+                <img src={cert.img} alt={`Certificate: ${cert.name}`} loading="lazy" />
+              </div>
+              <div className="cert-body">
+                <p className="cert-name">CERTIFICATION of {cert.name}</p>
+                <p className="cert-date">📅 {cert.date} · {cert.issuer}</p>
+              </div>
+            </article>
           ))}
         </div>
       </div>
@@ -89,4 +71,4 @@ const About = () => {
   );
 };
 
-export default About;
+export default Certificates;
