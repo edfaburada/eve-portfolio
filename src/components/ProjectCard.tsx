@@ -1,11 +1,5 @@
 import type { Project } from "../types/Project";
-// services/supabaseClient doesn't export getImageUrl —
-// provide a small local resolver that returns the provided image string
-// or undefined so the component can fall back to the placeholder.
-const getImageUrl = (image?: string | null) => {
-  if (!image) return undefined;
-  return image;
-};
+import { getImageUrl } from "../services/supabaseClient";
 
 // Placeholder shown when no image is available
 const PLACEHOLDER =
