@@ -1336,3 +1336,9 @@ textarea.form-input {
   line-height: 1.7;
   margin-bottom: var(--space-4);
 }
+
+.contact-info-title {
+  text-align: center;
+  width: 100%;
+  display: block;
+}
