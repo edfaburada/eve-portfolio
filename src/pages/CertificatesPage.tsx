@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { fetchCertificates, getImageUrl } from "../services/supabaseClient";
+import { resolveImage } from "../utils/imageResolver";
 
 interface Cert { id: number; name: string; date: string; issuer: string; image: string; }
 
@@ -51,12 +52,11 @@ const CertificatesPage = () => {
             {certs.map((cert, i) => (
               <article key={cert.id} className={`cert-card reveal reveal-delay-${((i % 3) + 1) as 1|2|3}`}>
                 <div className="cert-img-wrap">
-                  <img
-                    src={getImageUrl(cert.image) || PLACEHOLDER}
-                    alt={cert.name}
-                    loading="lazy"
-                    onError={(e) => { (e.currentTarget as HTMLImageElement).src = PLACEHOLDER; }}
-                  />
+                        <img
+                        src={resolveImage(cert.image) || PLACEHOLDER}
+                        alt={`Certificate: ${cert.name}`}
+                        loading="lazy"
+                        />
                 </div>
                 <div className="cert-body">
                   <p className="cert-name">CERTIFICATION of {cert.name}</p>
