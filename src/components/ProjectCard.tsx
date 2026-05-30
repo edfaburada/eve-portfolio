@@ -13,7 +13,6 @@ interface Props {
 const ProjectCard = ({ project }: Props) => {
   const [showDetails, setShowDetails] = useState(false);
 
-  // Resolve image safely
   const imgSrc = getImageUrl(project.image) || PLACEHOLDER;
 
   return (
@@ -47,12 +46,10 @@ const ProjectCard = ({ project }: Props) => {
         </div>
 
         <div className="project-actions">
-          {/* View Project opens image */}
           <a href={imgSrc} className="btn btn-primary btn-sm">
             View Project
           </a>
 
-          {/* Details opens modal */}
           <button
             className="btn btn-secondary btn-sm"
             onClick={() => setShowDetails(true)}
@@ -72,20 +69,15 @@ const ProjectCard = ({ project }: Props) => {
             className="floating-modal"
             onClick={(e) => e.stopPropagation()}
           >
+            {/* TITLE */}
             <h2>{project.title}</h2>
 
-            <img
-              src={imgSrc}
-              alt={project.title}
-              style={{
-                width: "100%",
-                borderRadius: "12px",
-                marginBottom: "1rem",
-              }}
-            />
+            {/* DESCRIPTION (MAIN CONTENT) */}
+            <p className="project-desc">
+              {project.description}
+            </p>
 
-            <p className="project-desc">{project.description}</p>
-
+            {/* TECH STACK */}
             {project.tech && project.tech.length > 0 && (
               <div className="project-tags">
                 {project.tech.map((t) => (
@@ -96,6 +88,7 @@ const ProjectCard = ({ project }: Props) => {
               </div>
             )}
 
+            {/* CLOSE BUTTON */}
             <button
               className="btn btn-primary btn-sm"
               onClick={() => setShowDetails(false)}

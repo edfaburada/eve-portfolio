@@ -108,7 +108,9 @@ const Contact = () => {
 
           {/* INFO */}
           <div className="contact-info-card reveal reveal-delay-2">
-            <h3 className="contact-info-title">My Details</h3>
+            <h3 className="contact-info-title" style={{ textAlign: "center" }}>
+             My Details
+            </h3>
 
             <div className="contact-info-row">
               <div className="contact-info-icon">📧</div>
