@@ -13,6 +13,7 @@ interface Props {
 const ProjectCard = ({ project }: Props) => {
   const [showDetails, setShowDetails] = useState(false);
 
+  // Resolve image safely
   const imgSrc = getImageUrl(project.image) || PLACEHOLDER;
 
   return (
@@ -37,22 +38,21 @@ const ProjectCard = ({ project }: Props) => {
           {project.tech && project.tech.length > 0 && (
             <div className="project-tags">
               {project.tech.map((t) => (
-                <span key={t} className="tag">{t}</span>
+                <span key={t} className="tag">
+                  {t}
+                </span>
               ))}
             </div>
           )}
         </div>
 
         <div className="project-actions">
-          {project.live_url && (
-            <a
-              href={project.image}
-              className="btn btn-primary btn-sm"
-            >
-              View Project
-            </a>
-          )}
+          {/* View Project opens image */}
+          <a href={imgSrc} className="btn btn-primary btn-sm">
+            View Project
+          </a>
 
+          {/* Details opens modal */}
           <button
             className="btn btn-secondary btn-sm"
             onClick={() => setShowDetails(true)}
@@ -62,14 +62,14 @@ const ProjectCard = ({ project }: Props) => {
         </div>
       </article>
 
-      {/* GLOBAL MODAL (NOT INSIDE CARD FLOW) */}
+      {/* FLOATING MODAL */}
       {showDetails && (
         <div
           className="modal-overlay"
           onClick={() => setShowDetails(false)}
         >
           <div
-            className="modal-content"
+            className="floating-modal"
             onClick={(e) => e.stopPropagation()}
           >
             <h2>{project.title}</h2>
@@ -79,17 +79,19 @@ const ProjectCard = ({ project }: Props) => {
               alt={project.title}
               style={{
                 width: "100%",
-                borderRadius: "10px",
+                borderRadius: "12px",
                 marginBottom: "1rem",
               }}
             />
 
-            <p>{project.description}</p>
+            <p className="project-desc">{project.description}</p>
 
-            {project.tech && (
+            {project.tech && project.tech.length > 0 && (
               <div className="project-tags">
                 {project.tech.map((t) => (
-                  <span key={t} className="tag">{t}</span>
+                  <span key={t} className="tag">
+                    {t}
+                  </span>
                 ))}
               </div>
             )}
@@ -97,6 +99,7 @@ const ProjectCard = ({ project }: Props) => {
             <button
               className="btn btn-primary btn-sm"
               onClick={() => setShowDetails(false)}
+              style={{ marginTop: "1rem" }}
             >
               Close
             </button>
