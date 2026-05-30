@@ -31,7 +31,7 @@ const Navbar = () => {
     <header className={`header${scrolled ? " scrolled" : ""}`}>
       <nav className="navbar container">
         <NavLink to="/" className="logo" onClick={close}>
-          Eve<span>.</span>Portfolio
+          Eve<span></span>Portfolio
         </NavLink>
 
         {/* Desktop + mobile nav links */}

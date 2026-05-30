@@ -46,11 +46,11 @@ const Hero = () => {
             </p>
 
             <div className="hero-actions reveal reveal-delay-4">
-              <a href="#projects" className="btn btn-primary">View My Work</a>
+              <a href="projects" className="btn btn-primary">View My Work</a>
               <a href="/resume.pdf" download className="btn btn-secondary">
                 Download Resume
               </a>
-              <a href="#contact" className="btn btn-ghost">Contact Me</a>
+              <a href="contact" className="btn btn-ghost">Contact Me</a>
             </div>
 
             <div className="hero-stats reveal reveal-delay-4">
@@ -63,7 +63,7 @@ const Hero = () => {
                 <span className="hero-stat-label">Certificates</span>
               </div>
               <div>
-                <span className="hero-stat-num">2025</span>
+                <span className="hero-stat-num">2026</span>
                 <span className="hero-stat-label">Graduate</span>
               </div>
             </div>
