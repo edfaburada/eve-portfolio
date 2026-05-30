@@ -1,17 +1,30 @@
-import { useEffect, useState } from "react"
-import { supabase } from "../services/supabaseClient"
+import { useEffect, useState } from "react";
+import { supabase } from "../services/supabaseClient";
+import type { Project } from "../types/Project";
 
 export const useProjects = () => {
-  const [projects, setProjects] = useState<any[]>([])
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetchProjects()
-  }, [])
+    const fetchProjects = async () => {
+      setLoading(true);
+      const { data, error } = await supabase
+        .from("projects")
+        .select("*")
+        .order("id", { ascending: true });
 
-  const fetchProjects = async () => {
-    const { data } = await supabase.from("projects").select("*")
-    setProjects(data || [])
-  }
+      if (error) {
+        setError(error.message);
+      } else {
+        setProjects(data || []);
+      }
+      setLoading(false);
+    };
 
-  return { projects }
-}
+    fetchProjects();
+  }, []);
+
+  return { projects, loading, error };
+};
