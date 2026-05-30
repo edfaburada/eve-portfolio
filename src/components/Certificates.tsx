@@ -2,19 +2,19 @@ import { useEffect, useRef } from "react";
 
 const CERTS = [
   {
-    img: "/cert1.png",
+    img: "CERTIFICATION of Front End Development Libraries_FABURADA.png",
     name: "Front End Development Libraries",
     date: "June 9, 2025",
     issuer: "freeCodeCamp",
   },
   {
-    img: "/cert2.png",
+    img: "CERTIFICATION of JavaScript Algorithms and Data Structures_FABURADA.png",
     name: "JavaScript Algorithms and Data Structures",
     date: "June 14, 2025",
     issuer: "freeCodeCamp",
   },
   {
-    img: "/cert3.png",
+    img: "CERTIFICATION of Responsive Web Design_FABURADA.png",
     name: "Responsive Web Design",
     date: "April 12, 2025",
     issuer: "freeCodeCamp",
