@@ -5,11 +5,9 @@ import type { Project } from "../types/Project";
 export const useProjects = () => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchProjects = async () => {
-      setLoading(true);
       const { data, error } = await supabase
         .from("projects")
         .select("*")
@@ -18,18 +16,13 @@ export const useProjects = () => {
       if (error) {
         setError(error.message);
         // Leave projects as [] so DEMO_PROJECTS kicks in
-        setProjects([]);
       } else {
-        setProjects((data as Project[]) || []);
-        setError(null);
+        setProjects(data || []);
       }
-
-      setLoading(false);
     };
 
     fetchProjects();
   }, []);
 
-  return { projects, error, loading };
+  return { projects, error };
 };
-

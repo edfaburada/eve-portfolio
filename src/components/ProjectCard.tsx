@@ -1,11 +1,4 @@
 import type { Project } from "../types/Project";
-// services/supabaseClient doesn't export getImageUrl —
-// provide a small local resolver that returns the provided image string
-// or undefined so the component can fall back to the placeholder.
-const getImageUrl = (image?: string | null) => {
-  if (!image) return undefined;
-  return image;
-};
 
 // Placeholder shown when no image is available
 const PLACEHOLDER =
@@ -17,7 +10,8 @@ interface Props {
 
 const ProjectCard = ({ project }: Props) => {
   // Resolve whatever is stored in `image` → a displayable URL
-  const imgSrc = getImageUrl(project.image) || PLACEHOLDER;
+  // If project.image is a non-empty string, use it directly; otherwise use the placeholder.
+  const imgSrc = project.image && project.image.length > 0 ? project.image : PLACEHOLDER;
 
   return (
     <article className="project-card">

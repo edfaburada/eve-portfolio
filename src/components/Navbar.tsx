@@ -1,21 +1,31 @@
-import { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 const NAV_LINKS = [
-  { to: "/about", label: "About" },
-  { to: "/projects", label: "Projects" },
-  { to: "/skills", label: "Skills" },
-  { to: "/certificates", label: "Certificates" },
-  { to: "/contact", label: "Contact" },
+  { href: "#about", label: "About" },
+  { href: "#projects", label: "Projects" },
+  { href: "#skills", label: "Skills" },
+  { href: "#certificates", label: "Certificates" },
+  { href: "#contact", label: "Contact" },
 ];
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [active, setActive] = useState("");
 
   useEffect(() => {
     const onScroll = () => {
       setScrolled(window.scrollY > 12);
+
+      // Active section detection
+      const sections = NAV_LINKS.map((l) => l.href.slice(1));
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const el = document.getElementById(sections[i]);
+        if (el && window.scrollY >= el.offsetTop - 100) {
+          setActive(sections[i]);
+          break;
+        }
+      }
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -24,9 +34,7 @@ const Navbar = () => {
 
   // Close menu on resize ≥ 720px
   useEffect(() => {
-    const onResize = () => {
-      if (window.innerWidth >= 720) setOpen(false);
-    };
+    const onResize = () => { if (window.innerWidth >= 720) setOpen(false); };
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
   }, []);
@@ -36,20 +44,21 @@ const Navbar = () => {
   return (
     <header className={`header${scrolled ? " scrolled" : ""}`}>
       <nav className="navbar container">
-        <NavLink to="/" className="logo" onClick={close}>
+        <a href="#home" className="logo" onClick={close}>
           Eve<span>.</span>Portfolio
-        </NavLink>
+        </a>
 
+        {/* Desktop links */}
         <ul className={`nav-links${open ? " open" : ""}`}>
           {NAV_LINKS.map((link) => (
-            <li key={link.to}>
-              <NavLink
-                to={link.to}
-                className={({ isActive }) => (isActive ? "active" : "")}
+            <li key={link.href}>
+              <a
+                href={link.href}
+                className={active === link.href.slice(1) ? "active" : ""}
                 onClick={close}
               >
                 {link.label}
-              </NavLink>
+              </a>
             </li>
           ))}
         </ul>
@@ -58,6 +67,7 @@ const Navbar = () => {
           Download CV
         </a>
 
+        {/* Hamburger */}
         <button
           className={`hamburger${open ? " open" : ""}`}
           onClick={() => setOpen((v) => !v)}
@@ -74,4 +84,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-

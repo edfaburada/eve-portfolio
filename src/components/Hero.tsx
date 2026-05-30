@@ -63,7 +63,7 @@ const Hero = () => {
                 <span className="hero-stat-label">Certificates</span>
               </div>
               <div>
-                <span className="hero-stat-num">2026</span>
+                <span className="hero-stat-num">2025</span>
                 <span className="hero-stat-label">Graduate</span>
               </div>
             </div>
