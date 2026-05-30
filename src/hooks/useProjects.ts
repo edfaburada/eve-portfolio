@@ -3,9 +3,9 @@ import { supabase } from "../services/supabaseClient";
 import type { Project } from "../types/Project";
 
 export const useProjects = () => {
-  const newLocal = useState<Project[]>([]);
-  const [projects, setProjects] = newLocal;
+  const [projects, setProjects] = useState<Project[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -18,17 +18,18 @@ export const useProjects = () => {
       if (error) {
         setError(error.message);
         // Leave projects as [] so DEMO_PROJECTS kicks in
+        setProjects([]);
       } else {
-        setProjects(data || []);
+        setProjects((data as Project[]) || []);
+        setError(null);
       }
+
+      setLoading(false);
     };
 
     fetchProjects();
   }, []);
 
-  return { projects, error };
+  return { projects, error, loading };
 };
 
-function setLoading(_arg0: boolean) {
-  throw new Error("Function not implemented.");
-}

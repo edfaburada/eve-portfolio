@@ -1,3 +1,5 @@
+import { NavLink } from "react-router-dom";
+
 const Footer = () => {
   const year = new Date().getFullYear();
 
@@ -10,9 +12,9 @@ const Footer = () => {
           <p className="footer-copy">© {year} Evelyn Faburada. All Rights Reserved.</p>
 
           <nav className="footer-links">
-            <a href="#about">About</a>
-            <a href="#projects">Projects</a>
-            <a href="#contact">Contact</a>
+            <NavLink to="/about">About</NavLink>
+            <NavLink to="/projects">Projects</NavLink>
+            <NavLink to="/contact">Contact</NavLink>
           </nav>
         </div>
       </div>
@@ -21,3 +23,4 @@ const Footer = () => {
 };
 
 export default Footer;
+
