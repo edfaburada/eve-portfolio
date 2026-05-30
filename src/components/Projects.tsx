@@ -11,17 +11,17 @@ const DEMO_PROJECTS: Project[] = [
     title: "Interactive Portfolio Prototype",
     description:
       "A prototype portfolio design built in Figma showcasing personal branding, project highlights, and responsive layout concepts.",
-    image: "src\assets\eve proto.png",
+    image: "eve-portfolio/src/project-portfolio.png",
     category: "UI/UX",
     tech: ["Figma", "UI/UX"],
-    live_url: "https://www.figma.com/proto/7kbkEX03mfHluW35rVJijy/MY-PORTFOLIO?node-id=31-284&starting-point-node-id=31%3A284&t=har2S1jpiU8hcy5e-1",
+    live_url: "#",
   },
   {
     id: 102,
     title: "SIL Monitoring System",
     description:
       "An online web-based system for monitoring supervised industry learning (SIL) activities and student progress records.",
-    image: "/assets/project-sil.png",
+    image: "/images/project-sil.png",
     category: "Systems",
     tech: ["PHP", "MySQL", "HTML", "CSS"],
     live_url: "#",
@@ -31,7 +31,7 @@ const DEMO_PROJECTS: Project[] = [
     title: "Coffee Shop UI/UX Design",
     description:
       "A clean and modern UI/UX design for a coffee shop online platform, including menu browsing and order flow screens.",
-    image: "/assets/project-coffee.png",
+    image: "/images/project-coffee.png",
     category: "UI/UX",
     tech: ["Figma", "UI/UX"],
     live_url: "#",
@@ -41,7 +41,7 @@ const DEMO_PROJECTS: Project[] = [
     title: "Personal Portfolio Website",
     description:
       "A fully responsive personal portfolio website built with React and TypeScript, connected to Supabase for dynamic project data.",
-    image: "/assets/project-portfolio-web.png",
+    image: "/images/project-portfolio-web.png",
     category: "Web Development",
     tech: ["React", "TypeScript", "Supabase", "CSS"],
     live_url: "#",
@@ -51,7 +51,7 @@ const DEMO_PROJECTS: Project[] = [
     title: "Enrollment Information System",
     description:
       "A school enrollment system for Asian College featuring student registration, subject management, and login authentication.",
-    image: "/assets/project-eis.png",
+    image: "/images/project-eis.png",
     category: "Systems",
     tech: ["PHP", "MySQL", "Bootstrap"],
     live_url: "#",
@@ -61,7 +61,7 @@ const DEMO_PROJECTS: Project[] = [
     title: "Responsive Landing Page",
     description:
       "A pixel-perfect responsive landing page for a local business, optimised for mobile-first performance and clean visual hierarchy.",
-    image: "/assets/project-landing.png",
+    image: "/images/project-landing.png",
     category: "Web Development",
     tech: ["HTML", "CSS", "JavaScript"],
     live_url: "#",
@@ -103,12 +103,9 @@ const Projects = () => {
         <div className="section-header reveal">
           <p className="section-eyebrow">Portfolio</p>
           <h2 className="section-title">Projects</h2>
-          <p className="section-subtitle">
-            Some of my works and sample projects.
-          </p>
+          <p className="section-subtitle">Some of my works and sample projects.</p>
         </div>
 
-        {/* Filter Buttons */}
         <div className="filter-bar reveal">
           {FILTERS.map((f) => (
             <button
@@ -121,7 +118,6 @@ const Projects = () => {
           ))}
         </div>
 
-        {/* Always render the grid — never show an empty state */}
         <div className="projects-grid">
           {filtered.map((project, i) => (
             <div
